@@ -68,7 +68,7 @@ class Meta:
 To add conditional types
 
 ```bash
-TEST_TYPES = [
+EG_TYPES = [
         ("IELTS", "IELTS"),
         ("TOEFL", "TOEFL")
     ]
@@ -94,10 +94,19 @@ In myapp/serializers.py (create this file), define a serializer for the Product 
 from rest_framework import serializers
 from .models import Product
 
-class ProductSerializer(serializers.ModelSerializer):
+class <ModelName>Serializer(serializers.ModelSerializer):
     class Meta:
-        model = Product
+        model = <ModelName>
         fields = ['id', 'name', 'description', 'price', 'created_at']
+```
+
+to add validators inside a class
+
+```bash
+ def validate(self, data):
+        # check for condition using data['fieldName']
+        
+        return data
 ```
 
 ## 6. Define Views
@@ -109,15 +118,43 @@ In myapp/views.py, create views to handle API requests:
 ```bash
 from rest_framework import generics
 from .models import Product
-from .serializers import ProductSerializer
+from rest_framework.views import APIView, status
 
-class ProductListCreateView(generics.ListCreateAPIView):
+class <NameView>CreateView(APIView):
+    """
+    add comments
+    """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
-class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+    def get/post(self, request, pk):
+        """
+        add comments
+        """
+        queryset = Product.objects.all()
+        filter = <ModelName>.objects.filter(id=pk).first().<fieldName>
+        
+        try:
+            // if get request no serialzer is required
+            serializer = <NameSerializer>(data={
+                            'fieldName': request.data.get('fieldName'),
+                            'fieldName': request.data.get('fieldName'),
+                            ...
+                        })
+                        
+                        if serializer.is_valid():
+                            serializer.save()
+                            return Response({'message': 'Test score submitted successfully'}, 
+                                        status=status.HTTP_201_CREATED)
+                        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            
+        except Exception as e:
+            # Log the error here
+            return Response(
+                {'error': 'Something went wrong while processing your request'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+           )
+
 ```
 
 ## 7. Set Up URLs
