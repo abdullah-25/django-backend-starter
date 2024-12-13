@@ -105,9 +105,12 @@ to add validators inside a class
 ```bash
  def validate(self, data):
         # check for condition using data['fieldName']
+        if fail:
+            raise serializers.ValidationError('error msg')
         
         return data
 ```
+
 
 ## 6. Define Views
 
@@ -124,8 +127,6 @@ class <NameView>CreateView(APIView):
     """
     add comments
     """
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
 
     def get/post(self, request, pk):
         """
@@ -155,6 +156,18 @@ class <NameView>CreateView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
            )
 
+```
+
+to add logs
+
+```bash
+import logging
+logger = logging.getLogger(__name__)
+
+class PostCredentials(APIView):
+    def post(self, request, format=None):
+        try:
+            logger.info(f"Processing test score submission for student {request.data.get('student')}")
 ```
 
 ## 7. Set Up URLs
