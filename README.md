@@ -40,6 +40,9 @@ INSTALLED_APPS = [
 ```
 
 ## 4. Define a Model
+
+documentation: https://docs.djangoproject.com/en/5.1/topics/db/models/
+
 In myapp/models.py, create a simple Product model:
 
 ```bash
@@ -62,6 +65,9 @@ python manage.py migrate
 ```
 
 ## 5. Create a Serializer
+
+docs: https://www.django-rest-framework.org/api-guide/serializers/ 
+
 In myapp/serializers.py (create this file), define a serializer for the Product model:
 
 ```bash
@@ -75,6 +81,9 @@ class ProductSerializer(serializers.ModelSerializer):
 ```
 
 ## 6. Define Views
+
+docs: https://www.django-rest-framework.org/tutorial/3-class-based-views/
+
 In myapp/views.py, create views to handle API requests:
 
 ```bash
@@ -92,6 +101,9 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
 ```
 
 ## 7. Set Up URLs
+
+docs: https://docs.djangoproject.com/en/5.1/topics/http/urls/
+
 In myapp/urls.py, wire up the views:
 
 ```bash
