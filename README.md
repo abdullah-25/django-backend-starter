@@ -57,6 +57,26 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 ```
+
+to add index to improve query performance:
+
+```bash
+class Meta:
+        indexes = [models.Index(fields=['fieldName', 'fieldName'])]
+```
+
+To add conditional types
+
+```bash
+TEST_TYPES = [
+        ("IELTS", "IELTS"),
+        ("TOEFL", "TOEFL")
+    ]
+    type = models.CharField(max_length=5, choices=TEST_TYPES)
+```
+
+For foregin-key, many-to-many relationship, refer to: https://docs.djangoproject.com/en/5.1/topics/db/examples/ 
+
 To apply the model, run the following commands:
 
 ```bash
